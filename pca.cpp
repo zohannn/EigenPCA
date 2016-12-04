@@ -1,9 +1,9 @@
-#define NODEBUG
+#define DEBUG
 #include <iostream>
 #ifdef DEBUG
   #include <iterator>
 #endif
-#include <Eigen/SVD>
+#include<eigen3/Eigen/SVD>
 #include "pca.h"
 
 using namespace std;

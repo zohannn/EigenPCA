@@ -1,0 +1,32 @@
+Initial matrix: 
+      0      0      0      0      0      0      1      1      1      1      1      1     -5
+     -5     -4      0      2     -7      9      9      9    -10     -8      0      6      2
+
+Numbers of eliminated columns (0 based):
+2 
+
+Matrix after the eliminating: 
+      0      0      0      0      0      1      1      1      1      1      1     -5
+     -5     -4      2     -7      9      9      9    -10     -8      0      6      2
+
+
+svd method was used
+
+
+Standard deviation:
+3.4641 2.59811e-07 
+
+Proportion of variance:
+1 5.62513e-15 
+
+Cumulative proportion:
+1 1 
+
+Kaiser criterion: 1
+
+95% threshold criterion: 1
+
+
+Rotated data: 
+     -2.44949  7.45058e-08
+      2.44949 -7.45058e-08
