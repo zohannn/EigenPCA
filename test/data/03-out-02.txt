@@ -1,0 +1,25 @@
+Initial matrix: 
+      1      2      3      4      5      6      7      8      9     10     11     12
+     13     14     15     16     17     18     19     20     21     22     23     24
+
+
+svd method was used
+
+
+Standard deviation:
+3.4641 2.79571e-07 
+
+Proportion of variance:
+1 6.51331e-15 
+
+Cumulative proportion:
+1 1 
+
+Kaiser criterion: 1
+
+95% threshold criterion: 1
+
+
+Rotated data: 
+      2.44949 -2.23517e-07
+     -2.44949  2.23517e-07

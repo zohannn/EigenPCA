@@ -1,6 +1,4 @@
 build*
-Debug*
-Release*
 *.vcxproj
 *.filters
 *.user

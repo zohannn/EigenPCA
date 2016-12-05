@@ -1,0 +1,29 @@
+Initial matrix: 
+     -1     -1
+      0      0
+      1      1
+      2      2
+
+
+cor method was used
+
+
+Standard deviation:
+1.41421 0 
+
+Proportion of variance:
+1 0 
+
+Cumulative proportion:
+1 1 
+
+Kaiser criterion: 1
+
+95% threshold criterion: 1
+
+
+Rotated data: 
+     -1.89737            0
+    -0.632456            0
+     0.632456            0
+      1.89737            0
