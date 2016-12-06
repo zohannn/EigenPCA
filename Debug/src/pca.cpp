@@ -433,7 +433,7 @@ int Pca::Calculate(Eigen::MatrixXd mat, const bool is_corr , const bool is_cente
     double tmp_sum = eigen_eigenvalues_sorted.sum();
     for (unsigned int i = 0; i < _ncols; ++i) {
       _sd.push_back(sqrt(eigen_eigenvalues_sorted(i)));
-      if (_sd[i] >= 1) {
+      if (_sd[i] >=1.0) {
         _kaiser = i + 1;
       }
       _prop_of_var.push_back(eigen_eigenvalues_sorted(i)/tmp_sum);
