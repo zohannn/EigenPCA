@@ -6,8 +6,8 @@
 
 class Pca {
 private:
-  std::vector<float>  _x;   // Initial matrix as vector filled by rows.
-  Eigen::MatrixXf     _xXf; // Initial matrix as Eigen MatrixXf structure
+  std::vector<double>  _x;   // Initial matrix as vector filled by rows.
+  Eigen::MatrixXd     _xXd; // Initial matrix as Eigen MatrixXd structure
   unsigned int  _nrows,     // Number of rows in matrix x.
                 _ncols;     // Number of cols in matrix x.
   bool  _is_center,         // Whether the variables should be shifted to be zero centered
@@ -17,12 +17,13 @@ private:
         _method;            // svd, cor, cov
   std::vector<unsigned int> 
       _eliminated_columns;  // Numbers of eliminated columns
-  std::vector<float>  _sd,  // Standard deviation of each component
+  std::vector<double>  _sd,  // Standard deviation of each component
                       _prop_of_var,   // Proportion of variance
                       _cum_prop,      // Cumulative proportion
                       _scores;        // Rotated values
   unsigned int  _kaiser,    // Number of PC according Kaiser criterion
-                _thresh95;  // Number of PC according 95% variance threshold
+                _thresh95,  // Number of PC according 95% variance threshold
+                _thresh99;  // Number of PC according 99% variance threshold
 
 public:
   //! Initializing values and performing PCA
@@ -38,8 +39,22 @@ public:
       0 if everything is Ok
       -1 if there were some errors
   */
-  int Calculate(std::vector<float>& x, const unsigned int& nrows, const unsigned int& ncols, 
+  int Calculate(std::vector<double>& x, const unsigned int& nrows, const unsigned int& ncols, 
           const bool is_corr = true, const bool is_center = true, const bool is_scale = true);
+  
+    //! Initializing values and performing PCA
+  /*!
+    The main method for performin Principal Component Analysis  
+    \param  mat     Initial data matrix 
+    \param  is_corr   Correlation matrix will be used instead of covariance matrix
+    \param  is_center Whether the variables should be shifted to be zero centered
+    \param  is_scale  Whether the variables should be scaled to have unit variance
+    \result
+      0 if everything is Ok
+      -1 if there were some errors
+  */
+  int Calculate(Eigen::MatrixXd mat, const bool is_corr = true, const bool is_center = true, const bool is_scale = true);
+  
   //! Return number of rows in initial matrix
   /*!
     \result Number of rows in initial matrix
@@ -87,17 +102,17 @@ public:
     \result Vector of standard deviation for each principal component:
             1st element is sd for 1st PC, 2nd - for 2nd PC and so on.
   */
-  std::vector<float> sd(void);    
+  std::vector<double> sd(void);    
   //! Proportion of variance
   /*!
     \result Vector of variances for each component
   */
-  std::vector<float> prop_of_var(void);
+  std::vector<double> prop_of_var(void);
   //! Cumulative proportion
   /*!
     \result Vector of cumulative proportions for each components
   */
-  std::vector<float> cum_prop(void);
+  std::vector<double> cum_prop(void);
   //! Principal component by the Kaiser criterion
   /*!
     Number of the last component with eigenvalue greater than 1.  
@@ -110,12 +125,18 @@ public:
     \result Number of PCs should be retain with the 95% threshold criterion 
   */
   unsigned int thresh95(void);
+    //! 99% threshold
+  /*!
+    Retain only PC which cumulative proportion is less than 0.99
+    \result Number of PCs should be retain with the 99% threshold criterion 
+  */
+  unsigned int thresh99(void);
   //! Rotated values (scores)
   /*!
     Return calculated scores (coordinates in a new space) as vector. Matrix filled by rows.
     \result Vector of scores
   */
-  std::vector<float> scores(void);
+  std::vector<double> scores(void);
   //! Class constructor
   Pca(void);
   //! Class destructor
