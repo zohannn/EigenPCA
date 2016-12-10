@@ -22,7 +22,8 @@ private:
                       _cum_prop,      // Cumulative proportion
                       _scores;        // Rotated values
   unsigned int  _kaiser,    // Number of PC according Kaiser criterion
-                _thresh95;  // Number of PC according 95% variance threshold
+                _thresh95,  // Number of PC according 95% variance threshold
+                _thresh99;  // Number of PC according 99% variance threshold
 
 public:
   //! Initializing values and performing PCA
@@ -124,6 +125,12 @@ public:
     \result Number of PCs should be retain with the 95% threshold criterion 
   */
   unsigned int thresh95(void);
+    //! 99% threshold
+  /*!
+    Retain only PC which cumulative proportion is less than 0.99
+    \result Number of PCs should be retain with the 99% threshold criterion 
+  */
+  unsigned int thresh99(void);
   //! Rotated values (scores)
   /*!
     Return calculated scores (coordinates in a new space) as vector. Matrix filled by rows.

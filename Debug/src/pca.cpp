@@ -117,18 +117,22 @@ int Pca::Calculate(vector<double> &x,
     #endif
     tmp_vec.resize(0);
     // PC's cumulative proportion
-    _thresh95 = 1;
+    _thresh95 = 1; _thresh99 = 1;
     _cum_prop.push_back(_prop_of_var[0]); 
     for (unsigned int i = 1; i < _prop_of_var.size(); ++i) {
       _cum_prop.push_back(_cum_prop[i-1]+_prop_of_var[i]);
-      if (_cum_prop[i] < 0.95) {
+      if (_cum_prop[i] <= 0.95) {
         _thresh95 = i+1;
+      }
+      if (_cum_prop[i] <= 0.99) {
+        _thresh99 = i+1;
       }
     }
     #ifdef DEBUG
       cout << "\nCumulative proportion:\n";
       copy(_cum_prop.begin(), _cum_prop.end(),std::ostream_iterator<double>(std::cout," "));  
       cout << "\n\nThresh95 criterion: PC #" << _thresh95 << endl;
+    cout << "\n\nThresh99 criterion: PC #" << _thresh99 << endl;
     #endif
     // Scores
     MatrixXd eigen_scores = _xXd * svd.matrixV();
@@ -213,18 +217,22 @@ int Pca::Calculate(vector<double> &x,
       cout << "\nKaiser criterion: PC #" << _kaiser << endl;
     #endif
     // PC's cumulative proportion
-    _cum_prop.clear(); _thresh95 = 1;
+    _cum_prop.clear(); _thresh95 = 1; _thresh99 = 1;
     _cum_prop.push_back(_prop_of_var[0]);
     for (unsigned int i = 1; i < _prop_of_var.size(); ++i) {
       _cum_prop.push_back(_cum_prop[i-1]+_prop_of_var[i]);
-      if (_cum_prop[i] < 0.95) {
+      if (_cum_prop[i] <= 0.95) {
         _thresh95 = i+1;
+      }
+      if (_cum_prop[i] <= 0.99) {
+        _thresh99 = i+1;
       }
     }  
     #ifdef DEBUG
       cout << "\n\nCumulative proportions:\n";
       copy(_cum_prop.begin(), _cum_prop.end(), std::ostream_iterator<double>(std::cout," "));  
       cout << "\n\n95% threshold: PC #" << _thresh95 << endl;
+    cout << "\n\n99% threshold: PC #" << _thresh99 << endl;
     #endif
     // Scores for PCA with correlation matrix
     // Scale before calculating new values
@@ -350,18 +358,22 @@ int Pca::Calculate(Eigen::MatrixXd mat, const bool is_corr , const bool is_cente
     #endif
     tmp_vec.resize(0);
     // PC's cumulative proportion
-    _thresh95 = 1;
+    _thresh95 = 1; _thresh99 = 1;
     _cum_prop.push_back(_prop_of_var[0]); 
     for (unsigned int i = 1; i < _prop_of_var.size(); ++i) {
       _cum_prop.push_back(_cum_prop[i-1]+_prop_of_var[i]);
-      if (_cum_prop[i] < 0.95) {
+      if (_cum_prop[i] <= 0.95) {
         _thresh95 = i+1;
+      }
+      if (_cum_prop[i] <= 0.99) {
+        _thresh99 = i+1;
       }
     }
     #ifdef DEBUG
       cout << "\nCumulative proportion:\n";
       copy(_cum_prop.begin(), _cum_prop.end(),std::ostream_iterator<double>(std::cout," "));  
       cout << "\n\nThresh95 criterion: PC #" << _thresh95 << endl;
+    cout << "\n\nThresh99 criterion: PC #" << _thresh99 << endl;
     #endif
     // Scores
     MatrixXd eigen_scores = _xXd * svd.matrixV();
@@ -446,18 +458,22 @@ int Pca::Calculate(Eigen::MatrixXd mat, const bool is_corr , const bool is_cente
       cout << "\nKaiser criterion: PC #" << _kaiser << endl;
     #endif
     // PC's cumulative proportion
-    _cum_prop.clear(); _thresh95 = 1;
+    _cum_prop.clear(); _thresh95 = 1; _thresh99 = 1;
     _cum_prop.push_back(_prop_of_var[0]);
     for (unsigned int i = 1; i < _prop_of_var.size(); ++i) {
       _cum_prop.push_back(_cum_prop[i-1]+_prop_of_var[i]);
-      if (_cum_prop[i] < 0.95) {
+      if (_cum_prop[i] <= 0.95) {
         _thresh95 = i+1;
+      }
+      if (_cum_prop[i] <= 0.99) {
+        _thresh99 = i+1;
       }
     }  
     #ifdef DEBUG
       cout << "\n\nCumulative proportions:\n";
       copy(_cum_prop.begin(), _cum_prop.end(), std::ostream_iterator<double>(std::cout," "));  
       cout << "\n\n95% threshold: PC #" << _thresh95 << endl;
+    cout << "\n\n99% threshold: PC #" << _thresh99 << endl;
     #endif
     // Scores for PCA with correlation matrix
     // Scale before calculating new values
@@ -494,6 +510,7 @@ std::vector<unsigned int> Pca::eliminated_columns(void) { return _eliminated_col
 string Pca::method(void) { return _method; }
 unsigned int Pca::kaiser(void) { return _kaiser; };
 unsigned int Pca::thresh95(void) { return _thresh95; };
+unsigned int Pca::thresh99(void) { return _thresh99; };
 unsigned int Pca::ncols(void) { return _ncols; }
 unsigned int Pca::nrows(void) { return _nrows; }
 bool Pca::is_scale(void) {  return _is_scale; }
@@ -510,6 +527,7 @@ Pca::Pca(void) {
 
   _kaiser   = 0;
   _thresh95 = 1;
+  _thresh99 = 1;
 }
 Pca::~Pca(void) { 
   _xXd.resize(0, 0);
